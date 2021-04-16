@@ -1,11 +1,42 @@
 <h1>Users</h1>
 
-<ol>
+<%= link_to "New User", new_user_path %>
+
+<h2>Our Exsisting Users : </h2>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>User ID</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>FirstName</th>
+      <th>LastName</th>
+      <th>DOB</th>
+      <th>Address</th>
+    </tr>
+  </thead>
+
   <% @users.each do |user| %>
-    <li>
-      <a href="/users/<%= user.id %>">
-        <%= user.username %>
-      </a>
-    </li>
+    <tr>
+      <td><%= user.id %></td>
+      <td><%= user.username %></td>
+      <td><%= user.email %> </td>
+      <td><%= user.user_detail.first_name %> </td>
+      <td><%= user.user_detail.last_name %> </td>
+      <td><%= user.user_detail.dob %> </td>
+      <td><%= user.user_detail.address %> </td>
+      <td><%= button_to "Update User", { action: "edit", id: user.id },
+      method: :get %></td>
+      <td><%= button_to "Delete User", { action: "destroy", id: user.id },
+      method: :delete, data: { confirm: "Are you sure , you want to delete the user?" } %></td>
+      
+    </tr>
   <% end %>
-</ol>
+</table>
+
+<%= form_with url: "/uploads", multipart: true do |form| %>
+  <%= form.file_field :picture %>
+  <%= form.submit "Create multiple users via file upload " %>
+<% end %>
