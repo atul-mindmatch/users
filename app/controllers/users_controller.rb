@@ -1,7 +1,7 @@
 require 'csv'
 class UsersController < ApplicationController
     def index
-        @users = User.all
+      @users = User.paginate(page: params[:page])
     end
 
     def show
@@ -26,6 +26,8 @@ class UsersController < ApplicationController
 
         redirect_to @user
       else
+        puts @user.errors.full_messages_for(:username)[0]
+        puts @user.errors.full_messages_for(:email)[0]
         render :new
       end
     end
@@ -45,7 +47,7 @@ class UsersController < ApplicationController
         file.write(uploaded_file.read)
       end
       table = CSV.parse(File.read(Rails.root.join('public', 'uploads', uploaded_file.original_filename)), headers: true)
-      100.times do |i|
+      1000.times do |i|
         email = table.by_row[i]["email"]
         username = table.by_row[i]["username"]
         first_name = table.by_row[i]["first_name"]
@@ -56,6 +58,10 @@ class UsersController < ApplicationController
         @user = User.new(username: username , email: email)
         if @user.save
           @user_detail = UserDetail.create(first_name: first_name , last_name: last_name , address: address , dob: dob , user_id: @user.id)
+        else 
+          puts @user.errors.full_messages_for(:username)[0]
+          puts @user.errors.full_messages_for(:email)[0]
+          next
         end
       end
       redirect_to :users

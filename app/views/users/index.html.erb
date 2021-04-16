@@ -1,6 +1,9 @@
-<h1>Users</h1>
+<h1>Users<%= link_to "New User", new_user_path %></h1>
 
-<%= link_to "New User", new_user_path %>
+<%= form_with url: "/uploads", multipart: true do |form| %>
+  <%= form.file_field :picture %>
+  <%= form.submit "Create multiple users via file upload " %>
+<% end %>
 
 <h2>Our Exsisting Users : </h2>
 
@@ -36,7 +39,4 @@
   <% end %>
 </table>
 
-<%= form_with url: "/uploads", multipart: true do |form| %>
-  <%= form.file_field :picture %>
-  <%= form.submit "Create multiple users via file upload " %>
-<% end %>
+<%= will_paginate @user %>
