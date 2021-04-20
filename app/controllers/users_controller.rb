@@ -20,15 +20,16 @@ class UsersController < ApplicationController
       dob =  params["user_detail"]["dob"]
       address =  params["user_detail"]["address"]
 
-      @user = User.new(username: username , email: email)    
+      @user = User.new(user_params)    
       if @user.save
         @user_detail = UserDetail.create(first_name: first_name , last_name: last_name , address: address , dob: dob , user_id: @user.id)
 
         redirect_to @user
       else
-        puts @user.errors.full_messages_for(:username)[0]
-        puts @user.errors.full_messages_for(:email)[0]
-        render :new
+        flash["alert"]  = @user.errors.full_messages.to_sentence
+        # puts @user.errors.full_messages_for(:email)[0]
+        puts @user.errors.full_messages.to_sentence
+        redirect_to :action => 'new'
       end
     end
 
@@ -88,6 +89,11 @@ class UsersController < ApplicationController
 
     def edit
       @user = User.find(params[:id])
+    end
+
+    private
+    def user_params
+      params.require(:user).permit(:username, :email)
     end
       
 end

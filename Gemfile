@@ -63,3 +63,12 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 
 gem 'will_paginate'
+
+gem 'bootstrap', '~> 4.0.0'
+
+gem 'jquery-rails'
+
+# Run against this stable release
+group :development, :test do
+  gem 'rspec-rails', '~> 5.0.0'
+end
