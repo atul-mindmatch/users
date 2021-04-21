@@ -1,6 +1,8 @@
-<h1><%= @user.username %></h1>
-<p><%= @user.email %></p>
-<p><%= @user.user_detail.first_name %> </p>
-<p><%= @user.user_detail.last_name %> </p>
-<p><%= @user.user_detail.dob %> </p>
-<p><%= @user.user_detail.address %> </p>
+<div class="jumbotron">
+<h1>Username : <%=  @user.username %></h1>
+<p>Email : <%= @user.email %></p>
+<p>First Name : <%= @user.user_detail.first_name %> </p>
+<p>Last Name : <%= @user.user_detail.last_name %> </p>
+<p>DOB :  <%= @user.user_detail.dob %> </p>
+<p>Address : <%= @user.user_detail.address %> </p>
+</div>
