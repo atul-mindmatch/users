@@ -22,8 +22,7 @@ class UsersController < ApplicationController
       address =  params["user_detail"]["address"]
 
 
-      temp_dob = dob
-      temp_dob = temp_dob.split('-')
+      temp_dob = dob.split('-')
 
       @user = User.new(user_params)    
       if !dob.empty? and temp_dob[0].to_i < 2002  and @user.save
@@ -76,11 +75,6 @@ class UsersController < ApplicationController
       redirect_to :users
     end
     
-    # private
-      
-    #   def user_params
-    #     params.require(:user).permit(:username, :email, :first_name, :last_name , :dob)
-    #   end
     def update
       @user = User.find(params[:id])
       @user.username = params["user"]["username"]
