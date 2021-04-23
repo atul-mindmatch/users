@@ -81,3 +81,4 @@ gem "factory_bot_rails"
 gem "pry"
 
 gem "faker"
+
