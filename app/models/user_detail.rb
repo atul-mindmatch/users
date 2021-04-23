@@ -5,7 +5,7 @@ class UserDetail < ApplicationRecord
 
   def age_greater_than_18?
     temp_dob = dob.to_s.split('-')
-    if temp_dob[0].to_i > 2002
+    if dob > 18.years.ago
       errors.add(:dob, "age must be greater than 18")
     end
   end
