@@ -1,5 +1,6 @@
 class UserDetail < ApplicationRecord
   belongs_to :user
+  validates :dob, presence: true
   validate :age_greater_than_18?
 
   def age_greater_than_18?
