@@ -1,51 +1,50 @@
 require 'csv'
 class UsersController < ApplicationController
-    def index
-      @users = User.order('created_at DESC').paginate(page: params[:page])
-      
-    end
+  def index
+    @users = User.order('created_at DESC').paginate(page: params[:page])      
+  end
 
-    def show
-        @user = User.find(params[:id])
-    end
+  def show
+    @user = User.find(params[:id])
+  end
 
-    def new
-        @user = User.new
-    end
+  def new
+    @user = User.new
+  end
     
-    def create
-      username = params["user"]["username"]
-      email = params["user"]["email"]
-      first_name = params["user_detail"]["first_name"]
-      last_name =  params["user_detail"]["last_name"]
-      dob =  params["user_detail"]["dob"]
-      address =  params["user_detail"]["address"]
-
-
-      temp_dob = dob.split('-')
-
-      @user = User.new(user_params)    
-      if !dob.empty? and temp_dob[0].to_i < 2002  and @user.save
-        @user_detail = UserDetail.create(first_name: first_name , last_name: last_name , address: address , dob: dob , user_id: @user.id)
+  def create
+    dob =  params["user_detail"]["dob"]
+    @user = User.new(user_params)
+    if @user.save
+      user_detail = user_detail_params
+      user_detail["user_id"] = @user.id
+      @user_detail = UserDetail.new(user_detail)
+      if @user_detail.save
         redirect_to @user
-      else
+      else 
+        @user.destroy
         flash["alert"]  = @user.errors.full_messages.to_sentence
+        flash["age"] =   @user_detail.errors.full_messages.to_sentence
         if dob.empty?
         flash["dob"] =  "DOB can't be empty" 
         end
-        if temp_dob[0].to_i > 2002
-          flash['dob_valiidate'] = "age must be greater than 18"
-        end
-        puts @user.errors.full_messages.to_sentence
         redirect_to :action => 'new'
       end
+    else
+      flash["alert"]  = @user.errors.full_messages.to_sentence
+      flash["age"] =   @user_detail.errors.full_messages.to_sentence
+      if dob.empty?
+      flash["dob"] =  "DOB can't be empty" 
+      end
+      redirect_to :action => 'new'
     end
+  end
 
-    def destroy
-      user = User.find_by(id: params["id"])
-      user.destroy
-      redirect_to :users
-    end
+  def destroy
+    user = User.find_by(id: params["id"])
+    user.destroy
+    redirect_to :users
+  end
   
 
 
@@ -78,6 +77,10 @@ class UsersController < ApplicationController
     private
     def user_params
       params.require(:user).permit(:username, :email)
+    end
+
+    def user_detail_params
+      params.require(:user_detail).permit(:first_name , :last_name , :dob ,:primary_address , :secondary_address)
     end
       
 end

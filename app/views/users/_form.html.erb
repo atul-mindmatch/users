@@ -30,8 +30,13 @@
       </div>
       
       <div class="form-group">
-      <%= user_form.label :query, "Address:" %>
-      <%= user_detail_form.text_field :address %>
+      <%= user_form.label :query, "Primary Address:" %>
+      <%= user_detail_form.text_field :primary_address %>
+      </div>
+
+      <div class="form-group">
+      <%= user_form.label :query, "Secondary Address:" %>
+      <%= user_detail_form.text_field :secondary_address %>
       </div>
       
       <div class="form-group">

@@ -19,8 +19,11 @@ module Bulk
             secondary_address = table.by_row[i]["secondary_address"]
             @user = User.new(username: username , email: email)
             if @user.save
-            @user_detail = UserDetail.create(first_name: first_name , last_name: last_name , primary_address: primary_address , secondary_address: secondary_address , dob: dob , user_id: @user.id)
-            else 
+            	@user_detail = UserDetail.create(first_name: first_name , last_name: last_name , primary_address: primary_address , secondary_address: secondary_address , dob: dob , user_id: @user.id)
+						 if @user_detail.errors.full_messages_for(:dob).length == 1
+								@user.destroy
+						 end
+						else 
                 puts @user.errors.full_messages_for(:username)[0]
                 puts @user.errors.full_messages_for(:email)[0]
                 next
