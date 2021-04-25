@@ -1,7 +1,9 @@
 require 'csv'
 class UsersController < ApplicationController
+  before_action :authenticate_admin!
+
   def index
-    @users = User.order('created_at DESC').paginate(page: params[:page])      
+    @users = User.order('created_at DESC').paginate(page: params[:page])    
   end
 
   def show

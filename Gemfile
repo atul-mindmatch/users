@@ -82,3 +82,6 @@ gem "pry"
 
 gem "faker"
 
+
+gem "devise"
+
