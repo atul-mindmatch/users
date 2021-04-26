@@ -23,10 +23,10 @@ module Bulk
 						if @user_detail.errors.full_messages_for(:dob).length == 1
 							@user.destroy
 						end
-						else 
-                            puts @user.errors.full_messages_for(:username)[0]
-                            puts @user.errors.full_messages_for(:email)[0]
-                            next
+			else 
+                puts @user.errors.full_messages_for(:username)[0]
+                puts @user.errors.full_messages_for(:email)[0]
+                next
             end
         end
         end
