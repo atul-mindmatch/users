@@ -5,7 +5,6 @@ module Bulk
     end
 
     def process
-			#binding.pry
       uploaded_file = @file
       File.open(Rails.root.join('public', 'uploads', uploaded_file.original_filename), 'wb') do |file|
         file.write(uploaded_file.read)
@@ -14,7 +13,7 @@ module Bulk
       table = CSV.parse(File.read(Rails.root.join('public', 'uploads', uploaded_file.original_filename)), headers: true)
       x = 0
       batch_size = 1000
-
+      
       while x < (table.size) 
         all_users = []
         all_user_details = []
@@ -58,9 +57,9 @@ module Bulk
             SQL
           user_ids = ActiveRecord::Base.connection.execute(sql+'returning id')
         end
-        temp = user_ids[0]["id"]    
+        temp = 0    
         for user_detail in all_user_details
-          user_detail["user_id"] = temp
+          user_detail["user_id"] = user_ids[temp]["id"]
           temp = temp + 1;
         end
 
