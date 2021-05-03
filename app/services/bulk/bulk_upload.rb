@@ -26,8 +26,16 @@ module Bulk
           dob = table.by_row[x]["dob"]
           primary_address = table.by_row[x]["primary_address"]
           secondary_address = table.by_row[x]["secondary_address"]
+          user_id  = nil
           user = { "email" => ActiveRecord::Base.connection.quote(email) , "username" => ActiveRecord::Base.connection.quote(username) }
-          user_id  = 1
+           user_detail = { 
+            "first_name" => ActiveRecord::Base.connection.quote(first_name), 
+            "last_name" => ActiveRecord::Base.connection.quote(last_name),
+            "dob" => ActiveRecord::Base.connection.quote(dob),
+            "user_id" => nil,
+            "primary_address" => ActiveRecord::Base.connection.quote(primary_address),
+            "secondary_address" => ActiveRecord::Base.connection.quote(secondary_address) 
+          }
           all_users.push(<<-SQL.chomp)
             (
               #{user.values.join(',')},
@@ -36,14 +44,6 @@ module Bulk
             )
           SQL
           x = x + 1;
-          user_detail = { 
-            "first_name" => ActiveRecord::Base.connection.quote(first_name), 
-            "last_name" => ActiveRecord::Base.connection.quote(last_name),
-            "dob" => ActiveRecord::Base.connection.quote(dob),
-            "user_id" => 1,
-            "primary_address" => ActiveRecord::Base.connection.quote(primary_address),
-            "secondary_address" => ActiveRecord::Base.connection.quote(secondary_address) 
-          }
           all_user_details.push(user_detail)
           if(x >= table.size) 
             break
