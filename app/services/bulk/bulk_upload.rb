@@ -19,16 +19,15 @@ module Bulk
         all_user_details = []
         user_details = []
         (batch_size).times do |i|
-				  email = table.by_row[x]["email"]
+	  email = table.by_row[x]["email"]
           username = table.by_row[x]["username"]
           first_name = table.by_row[x]["first_name"]
           last_name = table.by_row[x]["last_name"]
           dob = table.by_row[x]["dob"]
           primary_address = table.by_row[x]["primary_address"]
           secondary_address = table.by_row[x]["secondary_address"]
-          user_id  = nil
           user = { "email" => ActiveRecord::Base.connection.quote(email) , "username" => ActiveRecord::Base.connection.quote(username) }
-           user_detail = { 
+          user_detail = { 
             "first_name" => ActiveRecord::Base.connection.quote(first_name), 
             "last_name" => ActiveRecord::Base.connection.quote(last_name),
             "dob" => ActiveRecord::Base.connection.quote(dob),
