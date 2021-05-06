@@ -19,6 +19,12 @@ module Bulk
         all_users = []
         all_user_details = []
         user_details = []
+        currnet_usernames = []
+        current_emails = []
+        for user in User.all 
+          currnet_usernames.push(user.username)
+          current_emails.push(user.email)
+        end
         (batch_size).times do |i|
 	  email = table.by_row[x]["email"]
           username = table.by_row[x]["username"]
@@ -29,7 +35,9 @@ module Bulk
           secondary_address = table.by_row[x]["secondary_address"]
           found1 = false
           found2 = false
-          for user in users do
+          found3 = false
+          found4 = false
+          for user in users 
             if user["email"] == ActiveRecord::Base.connection.quote(email)
               found1 = true
             end
@@ -37,7 +45,20 @@ module Bulk
               found2 = true
             end
           end
-          if (User.find_by(email: email) == nil and User.find_by(username: username) == nil and !found1 and !found2)
+          for currnet_username in currnet_usernames 
+            if username == currnet_username
+              found3 = true
+              break;
+            end
+          end
+
+          for current_email in current_emails 
+            if current_email == email
+              found4 = true
+            end
+          end
+          
+          if !found3 and !found4 and !found1 and !found2
             user = { "email" => ActiveRecord::Base.connection.quote(email) , "username" => ActiveRecord::Base.connection.quote(username) }
             user_detail = { 
             "first_name" => ActiveRecord::Base.connection.quote(first_name), 
