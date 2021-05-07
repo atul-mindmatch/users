@@ -33,32 +33,32 @@ module Bulk
           dob = table.by_row[x]["dob"]
           primary_address = table.by_row[x]["primary_address"]
           secondary_address = table.by_row[x]["secondary_address"]
-          found1 = false
-          found2 = false
-          found3 = false
-          found4 = false
+          found_email1 = false
+          found_username1 = false
+          found_emai2 = false
+          found_username2_ = false
           for user in users 
             if user["email"] == ActiveRecord::Base.connection.quote(email)
-              found1 = true
+              found_email1 = true
             end
             if user["username"] == ActiveRecord::Base.connection.quote(username)
-              found2 = true
+              found_username1 = true
             end
           end
           for currnet_username in currnet_usernames 
             if username == currnet_username
-              found3 = true
+              found_username2_ = true
               break;
             end
           end
 
           for current_email in current_emails 
             if current_email == email
-              found4 = true
+              found_email2 = true
             end
           end
           
-          if !found3 and !found4 and !found1 and !found2
+          if !found_email1 and !found_emai2 and !found_username1 and !found_username2_
             user = { "email" => ActiveRecord::Base.connection.quote(email) , "username" => ActiveRecord::Base.connection.quote(username) }
             user_detail = { 
             "first_name" => ActiveRecord::Base.connection.quote(first_name), 
