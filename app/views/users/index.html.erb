@@ -18,7 +18,8 @@
       <th>FirstName</th>
       <th>LastName</th>
       <th>DOB</th>
-      <th>Address</th>
+      <th>Primary Address</th>
+      <th>Secondary Address</th>
     </tr>
   </thead>
 
@@ -30,7 +31,8 @@
       <td><%= user.user_detail.first_name %> </td>
       <td><%= user.user_detail.last_name %> </td>
       <td><%= user.user_detail.dob %> </td>
-      <td><%= user.user_detail.address %> </td>
+      <td><%= user.user_detail.primary_address %> </td>
+      <td><%= user.user_detail.secondary_address %> </td>
       <td><%= button_to "Update User", { action: "edit", id: user.id ,  }, { method: :get , class: 'btn btn-primary'} %></td>
       <td><%= button_to "Delete User", { action: "destroy", id: user.id }, method: :delete,class: 'btn btn-danger' ,
        data: { confirm: "Are you sure , you want to delete the user?" } %></td>

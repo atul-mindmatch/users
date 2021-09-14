@@ -20,8 +20,12 @@
       <%= user_detail_form.text_field :last_name %>
       </div>
       <div>
-      <%= user_form.label :query, "Address:" %>
-      <%= user_detail_form.text_field :address %>
+      <%= user_form.label :query, "Primary Address:" %>
+      <%= user_detail_form.text_field :primary_address %>
+      </div>
+      <div>
+      <%= user_form.label :query, "Secondary Address:" %>
+      <%= user_detail_form.text_field :secondary_address %>
       </div>
       <%= user_form.label :query, "DOB:" %>
       <%= user_detail_form.date_field :dob %>
